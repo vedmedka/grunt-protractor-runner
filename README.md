@@ -27,7 +27,7 @@ grunt.loadNpmTasks('grunt-protractor-runner');
 Finally you need a Selenium server. If you don't have one set up already, you can install a local standalone version with this command:
 
 ```shell
-./node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update
+./node_modules/grunt-protractor-runner/scripts/webdriver-manager-update
 ```
 
 ## The "protractor" task
@@ -88,7 +88,10 @@ If true, grunt will pass 'debug' as second argument to protractor CLI to enable 
 Type: `Object`
 Default value: `{}`
 
-Arguments passed to the command. These arguments can also be supplied via command-line too. Ex.`grunt protractor --specs=specs/some-test.js`  or for object options `grunt protractor --cucumberOpts={\"tags\":\"@quick\"}`
+Arguments passed to the command. These arguments can also be supplied via command-line too. Ex.`grunt protractor --specs=specs/some-test.js`  or for object options `grunt protractor --cucumberOpts={\"tags\":\"@quick\"}` or `--params='{ "location" : { "href" : "some url" } }'`
+
+Passing object argument with `--params.xxx.yyy=zzz` is not supported at the moment. If you need this behaviour, please join the discussion in [#148](https://github.com/teerapap/grunt-protractor-runner/pull/148) .
+
 Supported arguments are below.
 
 * seleniumAddress `string`: A running selenium address to use
@@ -110,6 +113,7 @@ Supported arguments are below.
 * sauceSeleniumAddress `string`: Customize the URL Protractor uses to connect to sauce labs (for example, if you are tunneling selenium traffic through a sauce connect tunnel). Default is `ondemand.saucelabs.com:80/wd/hub`
 * capabilities `object`: Capabilities object to be passed to the test, e.g. browserName, platform and version
 * framework `string`: Limited support for using mocha as the test framework instead of jasmine.
+* frameworkPath `string`: When `framework` is set to `custom`, set this path relative to the config file or absolute
 * cucumberOpts `object`: Cucumber framework options object to be passed to the test, e.g. require, tags and format
 * mochaOpts `object`: Mocha test framework options object to be passed
 * beforeLaunch `string`: You can specify a file containing code to run once configs are read but before any environment setup. This will only run once, and before onPrepare.
@@ -174,6 +178,9 @@ You need to install/update selenium webdriver for protractor.
 
 ## Release History
 
+* 3.2.0
+  * Support --frameworkPath in options.args (#155, #156)
+  * Support `grunt` version `>=0.4.0"` (#154)
 * 3.1.0
   * Add `options.outputOptions` (#143)
   * Support `webDriverProxy` in `options.args` (#147)

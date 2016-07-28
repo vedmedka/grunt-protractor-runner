@@ -45,13 +45,15 @@ module.exports = function(grunt) {
     grunt.verbose.writeln("Options: " + util.inspect(opts));
 
     var keepAlive = opts['keepAlive'];
-    var strArgs = ["seleniumAddress", "seleniumServerJar", "seleniumPort", "baseUrl", "rootElement", "browser", "chromeDriver", "chromeOnly", "directConnect", "sauceUser", "sauceKey", "sauceSeleniumAddress", "framework", "suite", "beforeLaunch", "onPrepare", "webDriverProxy"];
+    var strArgs = ["seleniumAddress", "seleniumServerJar", "seleniumPort", "baseUrl", "rootElement", "browser", "chromeDriver", "chromeOnly", "directConnect", "sauceUser", "sauceKey", "sauceSeleniumAddress", "framework", "frameworkPath", "suite", "beforeLaunch", "onPrepare", "webDriverProxy"];
     var listArgs = ["specs", "exclude"];
     var boolArgs = ["includeStackTrace", "verbose"];
     var objectArgs = ["params", "capabilities", "cucumberOpts", "mochaOpts"];
 
     var cmd = [protractorBinPath];
-    if (!grunt.util._.isUndefined(opts.configFile)) cmd.push(opts.configFile);
+    if (!grunt.util._.isUndefined(opts.configFile)){
+      cmd.push(opts.configFile);
+    }
     var args = process.execArgv.concat(cmd);
     if (opts.noColor){
       args.push('--no-jasmineNodeOpts.showColors');
